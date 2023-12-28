@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
+const path = require("path");
 const app = express();
 require("dotenv").config();
 
@@ -27,10 +27,11 @@ const Url = mongoose.model("Url", urlSchema);
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/public", express.static(`${process.cwd()}/public`));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", function (req, res) {
-  res.sendFile(process.cwd() + "/views/index.html");
+  res.sendFile(path.resolve(__dirname, "views", "index.html"));
+  // res.sendFile(__dirname + "/views/index.html");
 });
 
 app.post("/api/shorturl", (req, res) => {
