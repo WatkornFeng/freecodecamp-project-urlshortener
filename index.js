@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
+const { URL } = require("url");
 const app = express();
 require("dotenv").config();
 
@@ -24,7 +25,7 @@ const urlSchema = new mongoose.Schema({
 });
 const Url = mongoose.model("Url", urlSchema);
 
-app.use(cors("*"));
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + "/public"));
@@ -46,9 +47,9 @@ app.post("/api/shorturl", (req, res) => {
     // Replace "https://" or "http://" with an empty string
     //dns.lookup( hostname, options, callback )
     // hostname example : www.example.com, not : https://www.example.com
-    const hostname = reqUrlLowercase.replace(/^https?:\/\//, "");
+    // const hostname = reqUrlLowercase.replace(/^https?:\/\//, "");
 
-    dns.lookup(hostname, async (err) => {
+    dns.lookup(new URL(reqUrlLowercase).hostname, async (err) => {
       // if hostname is not existing
       if (err) {
         return res.send({ error: "Invalid URL" });
