@@ -83,14 +83,14 @@ app.post("/api/shorturl", (req, res) => {
   }
 });
 
-app.get("/api/shorturl/:shorturl", async function (req, res) {
-  // get params
-  const reqUrl = req.params.shorturl;
+// app.get("/api/shorturl/:shorturl", async function (req, res) {
+//   // get params
+//   const reqUrl = req.params.shorturl;
 
-  // find short_url in DB and redirect to that original_url
-  const url = await Url.findOne({ short_url: reqUrl });
-  res.redirect(url.original_url);
-});
+//   // find short_url in DB and redirect to that original_url
+//   const url = await Url.findOne({ short_url: reqUrl });
+//   res.redirect(url.original_url);
+// });
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
