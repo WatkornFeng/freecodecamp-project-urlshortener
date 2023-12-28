@@ -38,7 +38,7 @@ app.get("/", function (req, res) {
 app.post("/api/shorturl", (req, res) => {
   // get request body
   const reqUrl = req.body.url;
-  const reqUrlLowercase = reqUrl.toLowerCase();
+  // const reqUrlLowercase = reqUrl.toLowerCase();
   // check if it starts with https:// or http://
   if (
     reqUrlLowercase.startsWith("https://") ||
@@ -47,9 +47,8 @@ app.post("/api/shorturl", (req, res) => {
     // Replace "https://" or "http://" with an empty string
     //dns.lookup( hostname, options, callback )
     // hostname example : www.example.com, not : https://www.example.com
-    // const hostname = reqUrlLowercase.replace(/^https?:\/\//, "");
 
-    dns.lookup(new URL(reqUrlLowercase).hostname, async (err) => {
+    dns.lookup(new URL(reqUrl).hostname, async (err) => {
       // if hostname is not existing
       if (err) {
         return res.send({ error: "Invalid URL" });
