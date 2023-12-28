@@ -26,7 +26,7 @@ const Url = mongoose.model("Url", urlSchema);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
