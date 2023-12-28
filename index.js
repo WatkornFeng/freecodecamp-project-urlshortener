@@ -19,12 +19,12 @@ mongoose
   .catch((error) => console.log(error.message));
 
 const urlSchema = new mongoose.Schema({
-  original_url: { type: String, required: true },
-  short_url: { type: Number },
+  original_url: String,
+  short_url: Number,
 });
 const Url = mongoose.model("Url", urlSchema);
 
-app.use(cors());
+app.use(cors("*"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + "/public"));
