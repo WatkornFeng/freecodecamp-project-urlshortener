@@ -34,7 +34,7 @@ app.get("/", function (req, res) {
 
 app.post("/api/shorturl", (req, res) => {
   // get request body
-  const reqUrl = req.body.url;
+  const reqUrl = req.body.url.toLowerCase();
 
   // check if it starts with https:// or http://
   if (reqUrl.startsWith("https://") || reqUrl.startsWith("http://")) {
