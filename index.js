@@ -1,10 +1,11 @@
-require("dotenv").config();
 const dns = require("dns");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 const app = express();
+require("dotenv").config();
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -14,7 +15,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((con) => console.log("DB connection established"))
+  .then(() => console.log("DB connection established"))
   .catch((error) => console.log(error.message));
 
 const urlSchema = new mongoose.Schema({
@@ -25,10 +26,10 @@ const Url = mongoose.model("Url", urlSchema);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/public", express.static(`${process.cwd()}/public`));
+app.use(express.static("public"));
 
 app.get("/", function (req, res) {
-  res.sendFile(process.cwd() + "/views/index.html");
+  res.sendFile(__dirname + "/views/index.html");
 });
 
 app.post("/api/shorturl", (req, res) => {
