@@ -34,14 +34,17 @@ app.get("/", function (req, res) {
 
 app.post("/api/shorturl", (req, res) => {
   // get request body
-  const reqUrl = req.body.url.toLowerCase();
-
+  const reqUrl = req.body.url;
+  const reqUrlLowercase = reqUrl.toLowerCase();
   // check if it starts with https:// or http://
-  if (reqUrl.startsWith("https://") || reqUrl.startsWith("http://")) {
+  if (
+    reqUrlLowercase.startsWith("https://") ||
+    reqUrlLowercase.startsWith("http://")
+  ) {
     // Replace "https://" or "http://" with an empty string
     //dns.lookup( hostname, options, callback )
     // hostname example : www.example.com, not : https://www.example.com
-    const hostname = reqUrl.replace(/^https?:\/\//, "");
+    const hostname = reqUrlLowercase.replace(/^https?:\/\//, "");
 
     dns.lookup(hostname, async (err) => {
       // if hostname is not existing
